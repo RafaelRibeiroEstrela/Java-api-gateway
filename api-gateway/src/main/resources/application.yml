@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: ms-regioes
+          uri: lb:/ms-regioes
+          predicates:
+            - Path=/v1/paises/**
+            - Path=/v1/ufs/**
+            - Path=/v1/cidades/**
+
+
+server:
+  port: ${SERVER_PORT:8080}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761/eureka/}
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
