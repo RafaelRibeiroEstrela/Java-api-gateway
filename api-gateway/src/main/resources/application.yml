@@ -3,14 +3,21 @@ spring:
     name: api-gateway
   cloud:
     gateway:
-      routes:
-        - id: ms-regioes
-          uri: lb:/ms-regioes
-          predicates:
-            - Path=/v1/paises/**
-            - Path=/v1/ufs/**
-            - Path=/v1/cidades/**
-
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true #DESCOBERTA AUTOMATICA DAS ROTAS VIA EUREKA
+      #routes: #MAPEAMENTO MANUAL DAS ROTAS
+      #  - id: ms-regioes
+      #    uri: lb://ms-regioes
+      #    predicates:
+      #      - Path=/v1/paises/**
+      #      - Path=/v1/ufs/**
+      #      - Path=/v1/cidades/**
+      #  - id: ms-pessoas
+      #    uri: lb://ms-pessoas
+      #    predicates:
+      #      - Path=/v1/pessoas/**
 
 server:
   port: ${SERVER_PORT:8080}
