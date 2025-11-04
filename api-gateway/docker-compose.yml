@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  eureka_server_service:
+    container_name: application-api-gateway
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - rede1
+    environment:
+      EUREKA_SERVER_URL: http://application-api-gateway:8761/eureka/
+
+networks:
+  rede1:
+    external: true
