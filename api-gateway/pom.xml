@@ -8,9 +8,9 @@
         <version>3.3.10</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>estrela.r.rafael</groupId>
+    <groupId>com.example</groupId>
     <artifactId>api-gateway</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>api-gateway</name>
     <description>api-gateway</description>
     <properties>
