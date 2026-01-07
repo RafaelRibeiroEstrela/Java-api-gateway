@@ -7,24 +7,17 @@ import reactor.core.publisher.Mono;
 @Component
 public class AuthenticatorClient {
 
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
 
-    public AuthenticatorClient(WebClient webClient) {
-        this.webClient = webClient;
+    public AuthenticatorClient(WebClient.Builder webClientBuilder) {
+        this.webClientBuilder = webClientBuilder;
     }
 
-    public Mono<Boolean> isPublic(String path) {
-        return webClient.get()
-                .uri("lb://ms-security/v1/auth/is-public-path")
-                .header("path", path)
-                .retrieve()
-                .bodyToMono(Boolean.class);
-    }
-
-    public Mono<Boolean> validate(String token) {
-        return webClient.get()
-                .uri("lb://ms-security/v1/auth/validate-token")
+    public Mono<Boolean> isAllowed(String path, String token) {
+        return webClientBuilder.build().get()
+                .uri("lb://ms-security/v1/auth/is-allowed")
                 .header("token", token)
+                .header("path", path)
                 .retrieve()
                 .bodyToMono(Boolean.class);
     }
