@@ -25,13 +25,14 @@ public class AuthorizationGatewayFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
+        String method = request.getMethod().name();
         String path = request.getURI().getPath();
         String token = null;
         String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (authHeader != null && authHeader.startsWith(BEARER_PREFIX)) {
             token = authHeader.substring(BEARER_PREFIX.length()).trim();
         }
-        return authenticatorClient.isAllowed(path, token)
+        return authenticatorClient.isAllowed(method, path, token)
                 .flatMap(isAllowed -> {
                     if (Boolean.TRUE.equals(isAllowed)) {
                         return chain.filter(exchange);

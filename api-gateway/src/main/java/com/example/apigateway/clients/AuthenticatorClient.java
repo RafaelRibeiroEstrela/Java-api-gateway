@@ -13,11 +13,12 @@ public class AuthenticatorClient {
         this.webClientBuilder = webClientBuilder;
     }
 
-    public Mono<Boolean> isAllowed(String path, String token) {
+    public Mono<Boolean> isAllowed(String method, String path, String token) {
         return webClientBuilder.build().get()
-                .uri("lb://ms-security/v1/auth/is-allowed")
+                .uri("lb://bff/v1/auth/is-allowed")
                 .header("token", token)
                 .header("path", path)
+                .header("method", method)
                 .retrieve()
                 .bodyToMono(Boolean.class);
     }
